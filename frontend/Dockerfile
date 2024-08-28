@@ -1,27 +1,18 @@
-# Stage 1: Build the frontend
-FROM node:18 AS build
+FROM node:latest AS builder
+COPY ./src /html
+RUN npm install -g html-minifier-terser uglify-js clean-css-cli posthtml-cli posthtml-minifier
+# Minify HTML files and rename class names
+RUN find /html -name '*.html' -exec posthtml --use posthtml-minifier -o {} {} \;
+# Minify JavaScript files and obfuscate function names
+RUN find /html -name '*.js' -exec uglifyjs --compress --mangle -o {}.min -- {} \; \
+    && find /html -name '*.js.min' -exec sh -c 'mv "$0" "${0%.min}"' {} \;
+# Minify CSS files and rename class names
+RUN find /html -name '*.css' -exec cleancss -o {}.min {} \; \
+    && find /html -name '*.css.min' -exec sh -c 'mv "$0" "${0%.min}"' {} \;
 
-WORKDIR /app
 
-# Install dependencies
-COPY package*.json ./
-RUN npm install
-
-# Copy the rest of the application code and build
-COPY . .
-RUN npm run build
-
-# Stage 2: Serve the frontend with Nginx
-FROM nginx:alpine
-
-# Copy the build output to Nginx's web root
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Copy a custom nginx config file if needed
+FROM nginx:latest 
 COPY nginx.conf /etc/nginx/nginx.conf
-
-# Expose port 80
+COPY --from=builder /html /usr/share/nginx/html
 EXPOSE 80
-
-# Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]
