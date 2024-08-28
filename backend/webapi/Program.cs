@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using WikiLinker;
+using WikiLinker.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
