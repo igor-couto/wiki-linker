@@ -24,9 +24,9 @@ COPY --from=build /app .
 COPY ./anatex /app/anatex
 WORKDIR /app/anatex
 
-RUN ls -a
+#RUN ls -a
 #RUN cmake . && make
-RUN g++ main.cpp Anatex.cpp Queue.cpp Trie.cpp -o anatex -w
+#RUN g++ main.cpp Anatex.cpp Queue.cpp Trie.cpp -o anatex -w
 
 USER dotnetuser
 
