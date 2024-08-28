@@ -25,7 +25,7 @@ COPY ./anatex /app/anatex
 WORKDIR /app/anatex
 
 #RUN cmake . && make
-RUN g++ main.cpp Anatex.cpp Queue.cpp Trie.cpp -o anatex -w
+RUN g++ anatex/main.cpp anatex/Anatex.cpp anatex/Queue.cpp anatex/Trie.cpp -o anatex -w
 
 USER dotnetuser
 
