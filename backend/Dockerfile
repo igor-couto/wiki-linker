@@ -33,3 +33,5 @@ USER dotnetuser
 EXPOSE 50020
 
 CMD ["sh", "-c", "./anatex & dotnet WikiLinker.dll"]
+
+CMD ["dotnet", "WikiLinker.dll"]
