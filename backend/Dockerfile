@@ -1,8 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy-arm64v8 AS build
 WORKDIR /source
 COPY . .
-RUN dotnet restore "./webapi/src/WikiLinker.csproj" --disable-parallel --runtime linux-arm64
-RUN dotnet publish "./webapi/src/WikiLinker.csproj" -c Release -o /app --no-restore --runtime linux-arm64 --self-contained true
+RUN dotnet restore "./webapi/WikiLinker.csproj" --disable-parallel --runtime linux-arm64
+RUN dotnet publish "./webapi/WikiLinker.csproj" -c Release -o /app --no-restore --runtime linux-arm64 --self-contained true
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-jammy-arm64v8 AS run
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
