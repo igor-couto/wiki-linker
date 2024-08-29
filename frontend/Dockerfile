@@ -10,9 +10,8 @@ RUN find /html -name '*.js' -exec uglifyjs --compress --mangle -o {}.min -- {} \
 RUN find /html -name '*.css' -exec cleancss -o {}.min {} \; \
     && find /html -name '*.css.min' -exec sh -c 'mv "$0" "${0%.min}"' {} \;
 
-
 FROM nginx:latest 
-COPY wiki-linker.com /etc/nginx/sites-available
+COPY wiki-linker.com /etc/nginx/sites-available/
 RUN ln -sf /etc/nginx/sites-available/wiki-linker.com /etc/nginx/sites-enabled/
 COPY --from=builder /html /usr/share/nginx/html/wiki-linker.com
 EXPOSE 80
