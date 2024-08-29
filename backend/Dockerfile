@@ -26,12 +26,12 @@ WORKDIR /app/anatex
 
 #RUN ls -a
 #RUN cmake . && make
-#RUN g++ main.cpp Anatex.cpp Queue.cpp Trie.cpp -o anatex -w
+#RUN g++ main.cpp Anatex.cpp Trie.cpp -o anatex -w
 
 USER dotnetuser
 
-EXPOSE 50020
+EXPOSE 50030
 
-CMD ["sh", "-c", "./anatex & dotnet WikiLinker.dll"]
+# CMD ["sh", "-c", "./anatex & dotnet WikiLinker.dll"]
 
-CMD ["dotnet", "WikiLinker.dll"]
+ENTRYPOINT ["./WikiLinker"]
