@@ -12,7 +12,8 @@ RUN find /html -name '*.css' -exec cleancss -o {}.min {} \; \
 
 
 FROM nginx:latest 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder /html /usr/share/nginx/html
+COPY wiki-linker.com /etc/nginx/sites-available
+RUN ln -sf /etc/nginx/sites-available/wiki-linker.com /etc/nginx/sites-enabled/
+COPY --from=builder /html /usr/share/nginx/html/wiki-linker.com
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

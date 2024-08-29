@@ -11,7 +11,7 @@ ENV ASPNETCORE_URLS="http://+:50030"
 ENV ASPNETCORE_HTTP_PORT=50030
 
 # Install dependencies for C++ compilation
-RUN apt-get update && apt-get upgrade -y && apt-get install -y g++ cmake
+RUN apt-get update && apt-get upgrade -y && apt-get install -y g++
 
 RUN adduser --disabled-password --home /app dotnetuser && chown -R dotnetuser /app
 
@@ -24,14 +24,13 @@ COPY --from=build /app .
 COPY ./anatex /app/anatex
 WORKDIR /app/anatex
 
-#RUN ls -a
-#RUN cmake . && make
-#RUN g++ main.cpp Anatex.cpp Trie.cpp -o anatex -w
+RUN g++ src/main.cpp src/Anatex.cpp src/Trie.cpp -o anatex -w
+
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 USER dotnetuser
 
 EXPOSE 50030
 
-# CMD ["sh", "-c", "./anatex & dotnet WikiLinker.dll"]
-
-ENTRYPOINT ["./WikiLinker"]
+ENTRYPOINT ["/app/entrypoint.sh"]
