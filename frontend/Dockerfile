@@ -7,9 +7,9 @@ RUN npm install -g html-minifier-terser uglify-js clean-css-cli posthtml-cli pos
     && find . -name '*.css' -exec cleancss -o {} -- {} \;
 
 FROM nginx:1.24
-COPY wiki-linker.com /etc/nginx/sites-available/
+COPY wiki-linker.com /etc/nginx/sites-available/default
 RUN mkdir -p /etc/nginx/sites-enabled/ \
     && ln -sf /etc/nginx/sites-available/wiki-linker.com /etc/nginx/sites-enabled/
-COPY --from=builder /html /usr/share/nginx/html/wiki-linker.com
+COPY --from=builder /html /usr/share/nginx/html/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
