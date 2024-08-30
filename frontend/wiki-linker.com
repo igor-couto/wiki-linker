@@ -2,7 +2,7 @@ server {
     listen 80;
     server_name wiki-linker.com www.wiki-linker.com;
 
-    root /var/www/wiki-linker.com/html;
+    root /usr/share/nginx/html/wiki-linker.com;
     index index.html;
 
     location / {
