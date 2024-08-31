@@ -32,7 +32,7 @@ int main()
                     fs::remove(entry.path());
                 }
             }
-            std::this_thread::sleep_for(std::chrono::seconds(5)); // Wait a bit before checking again
+            std::this_thread::sleep_for(std::chrono::seconds(3));
         }
     } catch (const std::exception& e) 
     {

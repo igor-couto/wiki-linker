@@ -1,13 +1,13 @@
-#ifndef TRIE_H_INCLUDED
-#define TRIE_H_INCLUDED
+#ifndef TRIE_H
+#define TRIE_H
 
+#include <map>
 #include <string>
 
 struct TrieNode {
-    bool isKey;
-    TrieNode** son;
-
-    TrieNode() : isKey(false), son(nullptr) {}
+    std::map<wchar_t, TrieNode*> children;
+    std::wstring wikiLink;
+    bool isEndOfTitle = false;
 };
 
 class Trie {
@@ -15,23 +15,10 @@ public:
     TrieNode* root;
 
     Trie();
-    ~Trie();
 
-    TrieNode* createNode();
-    TrieNode* searchTrie(const std::string& key);  // Public interface
-    TrieNode* addTrie(const std::string& key);
-    void cleanup(TrieNode* node);
+    void insert(const std::wstring& title);
 
-private:
-    TrieNode* searchTrie(TrieNode* node, const std::string& key, size_t startPos);  // Private helper
-    TrieNode* searchNodeInsertion(TrieNode* node, const std::string& key, size_t startPos = 0);
-    TrieNode* addTrie(TrieNode* node, const std::string& key, size_t startPos = 0);
-    TrieNode* allocateNode();
-    TrieNode** allocateSon();
-
-    int keyPosition(unsigned char key);
-    int hashOne(unsigned char key);
-    int hashTwo(unsigned char key);
+    std::wstring search(const std::wstring& text, int& length);
 };
 
-#endif
+#endif 

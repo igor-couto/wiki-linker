@@ -1,33 +1,24 @@
-#ifndef ANATEX_H_INCLUDED
-#define ANATEX_H_INCLUDED
+#ifndef ANATEX_H
+#define ANATEX_H
 
-#include <iostream>
-#include <fstream>
 #include <string>
-
-#include "Queue.h"
+#include <unordered_set>
+#include <locale>
+#include <codecvt>
 #include "Trie.h"
 
-class Anatex
-{
-    private:
-        Trie* stopwords;
-        Trie* wikibase;
+class Anatex {
+public:
+    void initialize();
+    void annotateText(const std::string& inputFilePath, const std::string& outputFilePath);
 
-    public:
-        Anatex();
-        ~Anatex();
+private:
+    Trie trie;
+    std::unordered_set<std::wstring> stopWords;
 
-        void initialize();
-        void annotateText(const std::string& inputFilePath, const std::string& outputFilePath);
-
-    private:
-        void loadStopWords(std::ifstream& stopwords);
-        void loadWikiTerms(std::ifstream& wikibase);
-        int writeWordToFile(std::ofstream& file, const std::string& word, int pos);
-        std::string concatString(Queue& queue);
-        std::string buildLink(const std::string& key, const std::string& word);
-        std::string normalize(const std::string& str);
+    std::unordered_set<std::wstring> loadStopWords(const std::string& filename);
+    void loadWikiBase(const std::string& filename);
+    std::wstring processText(const std::wstring& originalText);
 };
 
 #endif

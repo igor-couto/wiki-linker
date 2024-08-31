@@ -1,156 +1,39 @@
 #include "Trie.h"
-#include <iostream>
 
-#define SIZE 190
-
-Trie::Trie() : root(nullptr) {
-    root = createNode();
+Trie::Trie() {
+    root = new TrieNode();
 }
 
-Trie::~Trie() {
-    cleanup(root);
-}
-
-TrieNode* Trie::createNode() {
-    TrieNode* node = nullptr;
-    try {
-        node = allocateNode();
-    } catch (std::bad_alloc& e) {
-        std::cerr << "FATAL ERROR: insufficient memory!" << std::endl;
-        cleanup(root);
-        exit(EXIT_FAILURE);
-    }
-    node->isKey = false;
-    node->son = nullptr;
-    return node;
-}
-
-TrieNode* Trie::allocateNode() {
-    TrieNode* node = new TrieNode();
-    return node;
-}
-
-TrieNode** Trie::allocateSon() {
-    TrieNode** sons = new TrieNode*[SIZE];
-    for (int i = 0; i < SIZE; ++i) {
-        sons[i] = nullptr;
-    }
-    return sons;
-}
-
-int Trie::keyPosition(unsigned char key) {
-    if (key >= 'a' && key <= 'z') {
-        return key - 'a';
-    } else if (key >= 'A' && key <= 'Z') {
-        return key - 'A' + 26;
-    } else if (key >= '0' && key <= '9') {
-        return key - '0' + 52;
-    } else {
-        // Extend this as needed for other characters
-        return -1;
-    }
-}
-
-int Trie::hashOne(unsigned char key) {
-    return key % SIZE;
-}
-
-int Trie::hashTwo(unsigned char key) {
-    return (key / SIZE) % SIZE;
-}
-
-TrieNode* Trie::searchTrie(const std::string& key) {
-    return searchTrie(root, key, 0);
-}
-
-TrieNode* Trie::searchTrie(TrieNode* node, const std::string& key, size_t startPos) {
-    TrieNode* current = node;
-    size_t pos = startPos;
-    
-    while (current && pos < key.length()) {
-        int index = keyPosition(static_cast<unsigned char>(key[pos]));
-        if (index == -1 || !current->son || !current->son[index]) {
-            return nullptr;
+void Trie::insert(const std::wstring& title) {
+    TrieNode* node = root;
+    for (wchar_t c : title) {
+        if (node->children.find(c) == node->children.end()) {
+            node->children[c] = new TrieNode();
         }
-        current = current->son[index];
-        ++pos;
+        node = node->children[c];
     }
-    
-    if (current && current->isKey) {
-        return current;
-    }
-    return nullptr;
+    node->isEndOfTitle = true;
+    node->wikiLink = L"https://en.wikipedia.org/wiki/" + title;
 }
 
-TrieNode* Trie::searchNodeInsertion(TrieNode* node, const std::string& key, size_t startPos) {
-    TrieNode* current = node;
-    size_t pos = startPos;
-    
-    while (pos < key.length()) {
-        int index = keyPosition(static_cast<unsigned char>(key[pos]));
-        if (index == -1) {
-            ++pos;
-            continue;
-        }
-        
-        if (!current->son) {
-            current->son = allocateSon();
-        }
-        
-        if (!current->son[index]) {
-            return current;
-        }
-        
-        current = current->son[index];
-        ++pos;
-    }
-    
-    return current;
-}
+std::wstring Trie::search(const std::wstring& text, int& length) {
+    TrieNode* node = root;
+    std::wstring result = L"";
+    length = 0;
+    int maxLength = 0;
 
-TrieNode* Trie::addTrie(const std::string& key) {
-    return addTrie(root, key, 0);
-}
-
-TrieNode* Trie::addTrie(TrieNode* node, const std::string& key, size_t startPos) {
-    if (!node) return nullptr;
-    
-    TrieNode* current = node;
-    size_t pos = startPos;
-    
-    while (pos < key.length()) {
-        int index = keyPosition(static_cast<unsigned char>(key[pos]));
-        if (index == -1) {
-            ++pos;
-            continue;
+    for (int i = 0; i < text.size(); ++i) {
+        wchar_t c = text[i];
+        if (node->children.find(c) == node->children.end()) {
+            break;
         }
-        
-        if (!current->son) {
-            current->son = allocateSon();
+        node = node->children[c];
+        if (node->isEndOfTitle) {
+            result = node->wikiLink;
+            maxLength = i + 1;
         }
-        
-        if (!current->son[index]) {
-            current->son[index] = createNode();
-        }
-        
-        current = current->son[index];
-        ++pos;
     }
-    
-    current->isKey = true;
-    return current;
-}
 
-void Trie::cleanup(TrieNode* node) {
-    if (!node) return;
-    
-    if (node->son) {
-        for (int i = 0; i < SIZE; ++i) {
-            if (node->son[i]) {
-                cleanup(node->son[i]);
-            }
-        }
-        delete[] node->son;
-    }
-    delete node;
+    length = maxLength;
+    return result;
 }
