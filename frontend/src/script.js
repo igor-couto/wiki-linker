@@ -9,7 +9,7 @@ document.getElementById('annotate-button').addEventListener('click', async () =>
     showLoadingAnimation();
 
     try {
-        const response = await fetch('http://localhost:5265/api/text', {
+        const response = await fetch('https://wiki-linker.com/api/text', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ document.getElementById('annotate-button').addEventListener('click', async () =>
 function pollForCompletion(requestId) {
     setTimeout(async () => {
         try {
-            const response = await fetch(`http://localhost:5265/api/text/${requestId}`);
+            const response = await fetch(`https://wiki-linker.com/api/text/${requestId}`);
             if(response.status === 200) {
                 const responseAsJson = await response.json();
                 document.getElementById('output-text').value = responseAsJson.annotatedText;
