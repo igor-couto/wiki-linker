@@ -22,7 +22,7 @@ COPY --from=build /app .
 COPY ./anatex /app/anatex
 WORKDIR /app/anatex
 
-RUN g++ src/main.cpp src/Anatex.cpp src/Trie.cpp -o anatex -w
+RUN g++ src/main.cpp src/Anatex.cpp src/Trie.cpp -o src/anatex -w
 
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
