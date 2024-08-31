@@ -13,8 +13,6 @@ ENV ASPNETCORE_HTTP_PORT=50030
 # Install dependencies for C++ compilation
 RUN apt-get update && apt-get upgrade -y && apt-get install -y g++
 
-RUN adduser --disabled-password --home /app dotnetuser && chown -R dotnetuser /app
-
 WORKDIR /app
 
 # Copy the .NET build output
@@ -25,11 +23,10 @@ COPY ./anatex /app/anatex
 WORKDIR /app/anatex
 
 RUN g++ src/main.cpp src/Anatex.cpp src/Trie.cpp -o anatex -w
+RUN chmod +x /src/anatex
 
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
-
-USER dotnetuser
 
 EXPOSE 50030
 
