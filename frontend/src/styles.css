@@ -1,13 +1,18 @@
+* {
+    box-sizing: border-box;
+}
+
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: #ebeae9;
+    color: #3f3f3f;
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
@@ -15,7 +20,6 @@ body {
 }
 
 header {
-    background-color: #6200ea;
     color: white;
     padding: 15px;
     width: 100%;
@@ -24,7 +28,16 @@ header {
 
 h1 {
     margin: 0;
-    font-size: 2em;
+    font-size: 4em;
+    font-family: "DomaineText",Georgia,serif;
+    font-weight: 300;
+    letter-spacing: 1rem;
+    color: #654a4e;
+}
+
+h1 > a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+    color: #654a4e;
 }
 
 main {
@@ -40,13 +53,13 @@ main {
 .text-area-section {
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    margin: 20px;
+    width: calc(100% - 40px);
+    margin: 20px auto;
 }
 
 .text-area-container {
     flex: 1;
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
 .text-area-container:last-child {
@@ -74,11 +87,11 @@ textarea {
 
 textarea:focus {
     outline: none;
-    border-color: #6200ea;
+    border-color: #654a4e;
 }
 
 button {
-    background-color: #6200ea;
+    background-color: #654a4e;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -89,15 +102,15 @@ button {
 }
 
 button:hover {
-    background-color: #3700b3;
+    background-color: #866368;
 }
 
 .ad-container {
     width: 100%;
-    max-width: 728px; /* Standard size for a leaderboard ad */
-    margin: 20px;
+    max-width: 728px;
+    margin: 20px auto;
     padding: 10px;
-    background-color: #e0e0e0; /* Light grey background for ad space */
+    background-color: #e0e0e0;
     text-align: center;
     box-sizing: border-box;
     border-radius: 4px;
@@ -111,8 +124,6 @@ button:hover {
 }
 
 footer {
-    background-color: #6200ea;
-    color: white;
     width: 100%;
     text-align: center;
 }
@@ -121,10 +132,13 @@ footer > p{
     margin: 10px;
 }
 
+hr {
+    width: 70%;
+}
+
 .loader {
     border: 4px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 4px solid #6200ea;
     width: 20px;
     height: 20px;
     animation: spin 2s linear infinite;
