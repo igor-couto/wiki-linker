@@ -5,7 +5,7 @@ server {
     index index.html;
 
     location / {
-        try_files $uri $uri/ =404;
+        try_files $uri $uri/ $uri.html =404;
         add_header Cache-Control "public, max-age=604800";
         expires 7d;
     }

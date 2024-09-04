@@ -15,7 +15,7 @@ body {
     color: #3f3f3f;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -46,7 +46,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 0px 20px;
     box-sizing: border-box;
 }
 
@@ -54,7 +54,7 @@ main {
     display: flex;
     justify-content: space-between;
     width: calc(100% - 40px);
-    margin: 20px auto;
+    margin: 10px auto;
 }
 
 .text-area-container {
@@ -128,7 +128,7 @@ footer {
     text-align: center;
 }
 
-footer > p{
+footer > p {
     margin: 10px;
 }
 
@@ -148,4 +148,56 @@ hr {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3em;
+        letter-spacing: 0.5rem;
+    }
+
+    .text-area-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .text-area-container {
+        margin-right: 0;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2em;
+        letter-spacing: 0.2rem;
+    }
+
+    .text-area-container textarea {
+        height: 200px;
+        font-size: 0.9em;
+    }
+
+    button {
+        padding: 12px;
+        font-size: 1em;
+    }
+
+    .ad-container {
+        padding: 5px;
+    }
+
+    footer p {
+        font-size: 0.8em;
+    }
+
+    hr {
+        width: 90%;
+    }
 }
