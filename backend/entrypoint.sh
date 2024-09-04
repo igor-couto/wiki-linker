@@ -1,4 +1,6 @@
 #!/bin/bash
-./anatex/src/anatex &
+cd /anatex/src
+./anatex &
+
 cd /app
 ./WikiLinker
