@@ -7,14 +7,20 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://wiki-linker.com/terms</loc>
+    <loc>https://wiki-linker.com/terms/</loc>
     <lastmod>2024-08-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://wiki-linker.com/privacy</loc>
+    <loc>https://wiki-linker.com/privacy/</loc>
     <lastmod>2024-08-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://wiki-linker.com/about/</loc>
+    <lastmod>2024-09-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
